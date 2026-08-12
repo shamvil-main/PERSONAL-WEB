@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shamvil — Creative Director & Visual Artist</title>
+  <meta name="description" content="Cinematic portfolio featuring vertical reels, short films, motion graphics, and 3D visual art in a Pinterest-inspired dynamic masonry layout." />
+  <meta name="author" content="Shamvil" />
+  
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:title" content="Shamvil — Creative Director & Visual Artist" />
+  <meta property="og:description" content="Cinematic portfolio showcasing vertical reels, films, and motion graphics." />
+  <meta property="og:type" content="website" />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+
+  <!-- Google Fonts: Syne & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+  <!-- Noise Texture Backdrop -->
+  <div class="noise-overlay" aria-hidden="true"></div>
+  
+  <!-- Ambient Glow Elements -->
+  <div class="glow-orb orb-1" aria-hidden="true"></div>
+  <div class="glow-orb orb-2" aria-hidden="true"></div>
+
+  <!-- Header / Navigation -->
+  <header id="site-header" class="site-header">
+    <!-- Rendered by Navbar.js -->
+  </header>
+
+  <!-- Main Content -->
+  <main id="app">
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+      <!-- Rendered by Hero.js -->
+    </section>
+
+    <!-- Work / Portfolio Section -->
+    <section id="work" class="work-section">
+      <div class="section-header">
+        <span class="section-tag">SELECTED WORKS</span>
+        <h2 class="section-title">Visual Anthology</h2>
+        <p class="section-subtitle">Intelligent multi-aspect gallery preserving true dimensions for 9:16 vertical reels, 16:9 widescreen films, and square visuals.</p>
+      </div>
+
+      <!-- Filter Bar & Gallery rendered by Gallery.js -->
+      <div id="gallery-container"></div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+      <!-- Rendered by About.js -->
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+      <!-- Rendered by Contact.js -->
+    </section>
+  </main>
+
+  <!-- Lightbox Modal Container -->
+  <div id="lightbox-root"></div>
+
+  <!-- Global Notification Toast Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
