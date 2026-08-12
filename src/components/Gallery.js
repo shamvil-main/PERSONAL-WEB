@@ -104,6 +104,35 @@ function buildMasonryGrid() {
     const heightFactor = parseAspectRatio(item.aspectRatio);
     columnHeights[minHeightIndex] += heightFactor + 0.15; // 0.15 for gap & padding
   });
+
+  // Setup Mobile Video Viewport Observer for 60fps Scroll Performance
+  setupVideoViewportObserver();
+}
+
+/**
+  * Smart IntersectionObserver to play videos only when visible in viewport
+  */
+function setupVideoViewportObserver() {
+  const videoCards = document.querySelectorAll('.card-video');
+  if (!videoCards.length || !('IntersectionObserver' in window)) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const video = entry.target;
+      if (entry.isIntersecting) {
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            // Autoplay prevented by browser, fail gracefully
+          });
+        }
+      } else {
+        video.pause();
+      }
+    });
+  }, { threshold: 0.2 });
+
+  videoCards.forEach(v => observer.observe(v));
 }
 
 /**
@@ -130,11 +159,10 @@ function createPortfolioCard(item) {
         <video 
           src="${item.src}" 
           class="card-video" 
-          autoplay
           muted 
           loop 
           playsinline 
-          preload="auto">
+          preload="metadata">
         </video>
         <div class="video-badge">
           <span class="video-badge-icon"></span>

@@ -1049,6 +1049,45 @@ button {
   min-height: 140px;
 }
 
+/* Mobile Navigation Drawer & Hamburger Styling */
+.mobile-nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 120;
+  padding: 0;
+}
+
+.hamburger-line {
+  width: 100%;
+  height: 2px;
+  background-color: var(--text-main);
+  border-radius: 2px;
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
+}
+
+.mobile-nav-toggle.open .hamburger-line:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+
+.mobile-nav-toggle.open .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-nav-toggle.open .hamburger-line:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+.mobile-only-status {
+  display: none;
+  margin-top: 1rem;
+}
+
 /* Toast Notifications */
 .toast-container {
   position: fixed;
@@ -1088,19 +1127,20 @@ button {
 .toast-success { border-color: #10b981; }
 .toast-icon { color: #10b981; }
 
-/* Responsive Layout Adjustments */
+/* Comprehensive Mobile & Responsive Breakpoints */
 @media (max-width: 1024px) {
   .lightbox-content-wrapper {
     flex-direction: column;
-    max-height: 85vh;
+    max-height: 90vh;
+    overflow-y: auto;
   }
   .lightbox-media-container[data-aspect="16:9"] {
-    width: 85vw;
-    height: calc(85vw * 9 / 16);
+    width: 88vw;
+    height: calc(88vw * 9 / 16);
   }
   .lightbox-meta-sidebar {
     width: 100%;
-    max-width: 500px;
+    max-width: 100%;
   }
   .about-grid, .contact-grid {
     grid-template-columns: 1fr;
@@ -1113,10 +1153,91 @@ button {
 
 @media (max-width: 768px) {
   .site-header { padding: 1rem 1.25rem; }
-  .nav-links { display: none; }
-  .mobile-nav-toggle { display: block; }
-  .contact-container { padding: 3rem 1.5rem; }
+  
+  .mobile-nav-toggle { display: flex; }
+  
+  .desktop-only-status { display: none; }
+  .mobile-only-status { display: block; }
+
+  /* Mobile Slide-down Full Drawer */
+  .nav-links {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(8, 8, 12, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-normal), visibility var(--transition-normal);
+    z-index: 110;
+  }
+
+  .nav-links.open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .nav-link {
+    font-size: 1.6rem;
+    font-weight: 700;
+  }
+
+  .filter-bar {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 0.5rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  
+  .filter-bar::-webkit-scrollbar { display: none; }
+
+  .filter-btn {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .work-section, .about-section, .contact-section {
+    padding: 4rem 1.25rem;
+  }
+
+  .contact-container { padding: 2.5rem 1.25rem; }
+  
+  .lightbox-prev, .lightbox-next {
+    width: 44px;
+    height: 44px;
+    font-size: 1.2rem;
+  }
+
   .lightbox-prev { left: 0.5rem; }
   .lightbox-next { right: 0.5rem; }
-  .lightbox-close-btn { top: 1rem; right: 1rem; }
+  .lightbox-close-btn { 
+    top: 1rem; 
+    right: 1rem; 
+    width: 44px; 
+    height: 44px; 
+    font-size: 1.2rem; 
+  }
+
+  .lightbox-media-container[data-aspect="9:16"] {
+    height: 70vh;
+    width: calc(70vh * 9 / 16);
+    max-width: 92vw;
+  }
+
+  .form-input, .form-textarea {
+    font-size: 16px; /* Prevents auto-zoom on iOS safari */
+  }
+
+  .portfolio-card:active {
+    transform: scale(0.98);
+  }
 }
