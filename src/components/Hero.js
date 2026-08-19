@@ -19,7 +19,7 @@ export function renderHero(element) {
       <!-- Floating Micro-Element 1 (Top Left) -->
       <div class="floating-micro-chip chip-top-left float-anim-1">
         <span class="chip-sparkle">⚡</span>
-        <span>CREATIVE DIRECTOR</span>
+        <span>CONTENT CREATOR &amp; DIRECTOR</span>
       </div>
 
       <!-- Floating Micro-Element 2 (Top Right) -->
@@ -59,7 +59,7 @@ export function renderHero(element) {
 
     <!-- Clean & Neatly Arranged Subtitle -->
     <p class="hero-subtitle">
-      Specializing in <span class="subtitle-highlight">Commercial Film Directing</span> • <span class="subtitle-highlight">9:16 Social Campaigns</span> • <span class="subtitle-highlight">DaVinci Color Grading</span> &amp; <span class="subtitle-highlight">3D Motion Graphics</span>
+      Specializing in <span class="subtitle-highlight">Digital Content Creation</span> • <span class="subtitle-highlight">Commercial Directing</span> • <span class="subtitle-highlight">9:16 Social Reels</span> &amp; <span class="subtitle-highlight">3D Motion Graphics</span>
     </p>
 
     <!-- Call-To-Action Buttons -->
@@ -90,8 +90,8 @@ export function renderHero(element) {
       <div class="capability-card">
         <span class="capability-icon">📱</span>
         <div class="capability-info">
-          <span class="capability-title">Vertical Reels & Shorts</span>
-          <span class="capability-sub">9:16 Social Video Campaigns</span>
+          <span class="capability-title">Content Creation & Reels</span>
+          <span class="capability-sub">9:16 Viral Social Campaigns</span>
         </div>
       </div>
 

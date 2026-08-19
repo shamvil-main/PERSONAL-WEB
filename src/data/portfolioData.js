@@ -321,26 +321,29 @@ export const portfolioItems = [
 
 export const ARTIST_INFO = {
   name: "SHAMVIL PORTFOLIO",
-  title: "Creative Director / Filmmaker / Visual Artist",
-  tagline: "Specializing in Commercial Film Directing, 9:16 Social Video Campaigns, DaVinci Color Grading & 3D Motion Graphics.",
-  bio: "Multidisciplinary Creative Director, Filmmaker, and Video Editor specializing in high-impact visual storytelling. Proven expertise across commercial 16:9 brand films, 9:16 vertical reels for social campaigns, advanced DaVinci Resolve color grading, and 3D motion graphics.",
+  title: "Creative Director & Content Creator",
+  tagline: "Specializing in Content Creation, Commercial Directing, 9:16 Social Reels, DaVinci Color Grading & 3D Motion Graphics.",
+  bio: "Multidisciplinary Creative Director, Digital Content Creator, and Filmmaker specializing in high-impact visual storytelling. Proven expertise across viral 9:16 vertical reels, commercial brand films, audience engagement strategies, advanced DaVinci Resolve color grading, and 3D motion graphics.",
   location: "Worldwide / Remote",
   email: "hello@shamvil.design",
   stats: [
-    { label: "Primary Focus", value: "Commercial Directing" },
+    { label: "Primary Focus", value: "Creative Directing" },
+    { label: "Creator Discipline", value: "Content Creation" },
     { label: "Social Format", value: "9:16 Vertical Reels" },
-    { label: "Post-Production", value: "DaVinci Color Grade" },
-    { label: "Visual FX", value: "3D & Motion Graphics" }
+    { label: "Post-Production", value: "DaVinci Color Grade" }
   ],
   skills: [
+    "Content Creation",
     "Commercial Directing",
+    "Viral Reel Production",
     "Color Grading",
     "3D Motion Design",
+    "Digital Storytelling",
     "Visual FX",
     "Art Direction",
     "Cinematography",
-    "Brand Identity",
-    "Spatial Design"
+    "Brand Partnerships",
+    "Brand Identity"
   ],
   tools: [
     { name: "DaVinci Resolve Studio", category: "Color & Edit" },

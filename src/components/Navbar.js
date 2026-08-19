@@ -13,7 +13,7 @@ export function renderNavbar(element) {
         </div>
         <div class="brand-text">
           <span class="brand-name">SHAMVIL<span class="dot">.</span></span>
-          <span class="brand-title">CREATIVE DIRECTOR</span>
+          <span class="brand-title">DIRECTOR &amp; CONTENT CREATOR</span>
         </div>
       </a>
 
