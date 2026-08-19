@@ -9,8 +9,12 @@ import { renderGallery } from './components/Gallery.js';
 import { initLightbox } from './components/Lightbox.js';
 import { renderAbout } from './components/About.js';
 import { renderContact } from './components/Contact.js';
+import { initInteractiveBackground } from './components/InteractiveBg.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+  // 0. Initialize Interactive Floating Background Physics
+  initInteractiveBackground();
+
   // 1. Initialize Navbar
   const header = document.getElementById('site-header');
   if (header) renderNavbar(header);

@@ -69,6 +69,89 @@ body {
   z-index: 1;
 }
 
+/* Interactive Background Micro-Elements Container & Physics Styles */
+.interactive-bg-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.interactive-bg-element {
+  position: absolute;
+  font-family: 'Syne', monospace, sans-serif;
+  color: var(--accent-cyan);
+  opacity: 0.28;
+  user-select: none;
+  will-change: transform;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  animation: floatAmbient 5s ease-in-out infinite alternate;
+}
+
+.interactive-bg-element.type-crosshair {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #38bdf8;
+  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.6));
+}
+
+.interactive-bg-element.type-sparkle {
+  font-size: 0.95rem;
+  color: #c084fc;
+  filter: drop-shadow(0 0 8px rgba(192, 132, 252, 0.6));
+}
+
+.interactive-bg-element.type-ring {
+  font-size: 0.85rem;
+  color: #818cf8;
+  opacity: 0.22;
+}
+
+.interactive-bg-element.type-film {
+  font-size: 1.1rem;
+  opacity: 0.25;
+}
+
+.interactive-bg-element.type-dot {
+  font-size: 1.4rem;
+  color: #38bdf8;
+  opacity: 0.35;
+}
+
+.interactive-bg-element.type-tag {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  padding: 0.2rem 0.5rem;
+  border: 1px dashed rgba(56, 189, 248, 0.3);
+  border-radius: 4px;
+  color: #94a3b8;
+  background: rgba(15, 23, 42, 0.4);
+  opacity: 0.22;
+}
+
+.interactive-bg-element.type-star {
+  font-size: 1rem;
+  color: #fbbf24;
+  filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.6));
+}
+
+@keyframes floatAmbient {
+  0% {
+    margin-top: 0px;
+    margin-left: 0px;
+  }
+  100% {
+    margin-top: -14px;
+    margin-left: 8px;
+  }
+}
+
 .glow-orb {
   position: fixed;
   width: 500px;
