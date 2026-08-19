@@ -57,9 +57,9 @@ export function renderHero(element) {
       <span class="hero-title-bottom">PORTFOLIO</span>
     </h1>
 
-    <!-- Professional Subtitle -->
+    <!-- Clean & Neatly Arranged Subtitle -->
     <p class="hero-subtitle">
-      Specializing in Commercial Film Directing, 9:16 Social Video Campaigns, DaVinci Color Grading & 3D Motion Graphics.
+      Specializing in <span class="subtitle-highlight">Commercial Film Directing</span> • <span class="subtitle-highlight">9:16 Social Campaigns</span> • <span class="subtitle-highlight">DaVinci Color Grading</span> &amp; <span class="subtitle-highlight">3D Motion Graphics</span>
     </p>
 
     <!-- Call-To-Action Buttons -->
