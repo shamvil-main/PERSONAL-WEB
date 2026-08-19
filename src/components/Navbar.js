@@ -1,36 +1,46 @@
 /**
- * Header & Navbar Component
+ * Header & Navbar Component — Ultra Professional Executive Navigation
  */
 
 export function renderNavbar(element) {
   element.innerHTML = `
     <div class="nav-container">
-      <a href="#hero" class="brand-logo">
-        <img src="/profile-avatar.png" alt="Shamvil" class="nav-avatar" />
-        <span>SHAMVIL<span class="dot">.</span></span>
+      <!-- Executive Brand Logo & Title -->
+      <a href="#hero" class="brand-logo" aria-label="Shamvil Portfolio Home">
+        <div class="nav-avatar-wrapper">
+          <img src="/profile-avatar.png" alt="Shamvil" class="nav-avatar" />
+          <span class="nav-avatar-status-dot" title="Available for Roles"></span>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">SHAMVIL<span class="dot">.</span></span>
+          <span class="brand-title">CREATIVE DIRECTOR</span>
+        </div>
       </a>
 
+      <!-- Mobile Nav Toggle -->
       <button id="mobile-menu-btn" class="mobile-nav-toggle" aria-label="Toggle Mobile Menu">
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
       </button>
 
+      <!-- Navigation Links -->
       <ul id="nav-menu" class="nav-links">
         <li><a href="#work" class="nav-link active">Work</a></li>
         <li><a href="#about" class="nav-link">About</a></li>
         <li><a href="#contact" class="nav-link">Contact</a></li>
         <li class="mobile-only-status">
-          <div class="status-badge">
-            <span class="status-dot"></span>
-            <span>Available 2026</span>
-          </div>
+          <a href="#contact" class="nav-cta-btn">Let's Talk →</a>
         </li>
       </ul>
 
-      <div class="status-badge desktop-only-status">
-        <span class="status-dot"></span>
-        <span>Available 2026</span>
+      <!-- Desktop Right Action Bar -->
+      <div class="nav-actions-desktop">
+        <div class="status-badge">
+          <span class="status-dot"></span>
+          <span>Available 2026</span>
+        </div>
+        <a href="#contact" class="nav-cta-btn">Let's Talk →</a>
       </div>
     </div>
   `;
