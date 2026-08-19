@@ -1,5 +1,5 @@
 /**
- * Hero Section Component — Ultra Premium Agency-Ready Header
+ * Hero Section Component — Profile Avatar Spotlight & Floating Micro-Elements
  */
 
 import { ARTIST_INFO } from '../data/portfolioData.js';
@@ -14,12 +14,41 @@ export function renderHero(element) {
       <span class="corner bottom-right"></span>
     </div>
 
-    <!-- Live Professional Status Badge -->
-    <div class="hero-pill">
-      <span class="hero-pill-sparkle">⚡</span>
-      <span class="hero-pill-text">${ARTIST_INFO.title}</span>
-      <span class="hero-pill-divider">•</span>
-      <span class="hero-pill-status">OPEN FOR RECRUITMENT &amp; ROLES</span>
+    <!-- Top Profile Avatar Spotlight with Floating Micro-Elements -->
+    <div class="hero-avatar-spotlight-container">
+      <!-- Floating Micro-Element 1 (Top Left) -->
+      <div class="floating-micro-chip chip-top-left float-anim-1">
+        <span class="chip-sparkle">⚡</span>
+        <span>CREATIVE DIRECTOR</span>
+      </div>
+
+      <!-- Floating Micro-Element 2 (Top Right) -->
+      <div class="floating-micro-chip chip-top-right float-anim-2">
+        <span class="chip-dot-red"></span>
+        <span>4K DCI CINEMA</span>
+      </div>
+
+      <!-- Center Profile Picture Box -->
+      <div class="hero-avatar-box">
+        <img src="/profile-avatar.png" alt="Shamvil Profile" class="hero-avatar-img" />
+        <div class="avatar-ring-glow"></div>
+        <div class="avatar-camera-crosshair top-l">+</div>
+        <div class="avatar-camera-crosshair top-r">+</div>
+        <div class="avatar-camera-crosshair bot-l">+</div>
+        <div class="avatar-camera-crosshair bot-r">+</div>
+      </div>
+
+      <!-- Floating Micro-Element 3 (Bottom Left) -->
+      <div class="floating-micro-chip chip-bottom-left float-anim-3">
+        <span class="chip-icon">🎬</span>
+        <span>9:16 &amp; 16:9 REELS</span>
+      </div>
+
+      <!-- Floating Micro-Element 4 (Bottom Right) -->
+      <div class="floating-micro-chip chip-bottom-right float-anim-4">
+        <span class="chip-icon">🎨</span>
+        <span>DAVINCI COLOR</span>
+      </div>
     </div>
 
     <!-- Massive Premium Title: SHAMVIL PORTFOLIO -->
@@ -46,7 +75,7 @@ export function renderHero(element) {
       </a>
     </div>
 
-    <!-- Professional Core Capabilities Ribbon (Impression-Ready for Companies) -->
+    <!-- Professional Core Capabilities Ribbon -->
     <div class="hero-capabilities-ribbon">
       <div class="capability-card">
         <span class="capability-icon">🎬</span>
