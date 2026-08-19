@@ -6,7 +6,8 @@ export function renderNavbar(element) {
   element.innerHTML = `
     <div class="nav-container">
       <a href="#hero" class="brand-logo">
-        SHAMVIL<span class="dot">.</span>
+        <img src="/profile-avatar.png" alt="Shamvil" class="nav-avatar" />
+        <span>SHAMVIL<span class="dot">.</span></span>
       </a>
 
       <button id="mobile-menu-btn" class="mobile-nav-toggle" aria-label="Toggle Mobile Menu">

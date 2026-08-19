@@ -59,7 +59,7 @@ export const portfolioItems = [
     mediaType: "video",
     aspectRatio: "9:16", // Vertical 9:16 Reel (720x1280)
     src: "/VIDEOS/Video-12111.mp4",
-    poster: createOutlineSvg("BNMX BRAND REEL", "Videos", "9:16 VERTICAL REEL", "#38bdf8", "#818cf8"),
+    poster: "/VIDEOS/Video-12111.mp4.png",
     description: "Original vertical 9:16 cinematic commercial reel created for BNMX.",
     year: "2026",
     client: "BNMX",
@@ -74,7 +74,7 @@ export const portfolioItems = [
     mediaType: "video",
     aspectRatio: "16:9", // Widescreen 16:9 Film (638x360)
     src: "/VIDEOS/Video-49984.mp4",
-    poster: createOutlineSvg("MSF URGGATEERI", "Videos", "16:9 WIDESCREEN", "#f59e0b", "#f43f5e"),
+    poster: "/VIDEOS/Video-49984.mp4.png",
     description: "Original 16:9 widescreen cinematic film project created for MSF URGGATEERI.",
     year: "2025",
     client: "MSF URGGATEERI",
@@ -89,12 +89,57 @@ export const portfolioItems = [
     mediaType: "video",
     aspectRatio: "16:9", // Widescreen 16:9 Film (638x360)
     src: "/VIDEOS/Video-28064.mp4",
-    poster: createOutlineSvg("URGATEERI PANCHAYATH", "Videos", "16:9 WIDESCREEN", "#10b981", "#38bdf8"),
+    poster: "/VIDEOS/Video-28064.mp4.png",
     description: "Original 16:9 widescreen cinematic documentary film project created for URGATEERI PANCHAYATH.",
     year: "2025",
     client: "URGATEERI PANCHAYATH",
     tools: ["DaVinci Resolve", "Drone Cinema", "Premiere Pro"],
     duration: "1:15",
+    featured: true
+  },
+  {
+    id: "custom-user-video-4",
+    title: "UI/UX APP PROMO REEL",
+    category: "Videos",
+    mediaType: "video",
+    aspectRatio: "9:16",
+    src: "/VIDEOS/WhatsApp-Video-1.mp4",
+    poster: "/VIDEOS/WhatsApp-Video-1.mp4.png",
+    description: "Original vertical 9:16 interactive app showcase and UI motion presentation reel.",
+    year: "2026",
+    client: "App Motion",
+    tools: ["After Effects", "Figma", "Premiere Pro"],
+    duration: "0:14",
+    featured: true
+  },
+  {
+    id: "custom-user-video-5",
+    title: "ORBIT MOTION GRAPHICS",
+    category: "Videos",
+    mediaType: "video",
+    aspectRatio: "9:16",
+    src: "/VIDEOS/WhatsApp-Video-2.mp4",
+    poster: "/VIDEOS/WhatsApp-Video-2.mp4.png",
+    description: "Dynamic vector motion graphics showcase featuring 3D circular icon paths.",
+    year: "2026",
+    client: "Interactive Media",
+    tools: ["Cinema 4D", "After Effects", "Lottie"],
+    duration: "0:18",
+    featured: true
+  },
+  {
+    id: "custom-user-video-6",
+    title: "HIGHLIGHT MOTION COMMERCIAL",
+    category: "Videos",
+    mediaType: "video",
+    aspectRatio: "9:16",
+    src: "/VIDEOS/WhatsApp-Video-3.mp4",
+    poster: "/VIDEOS/WhatsApp-Video-3.mp4.png",
+    description: "High-impact vertical storytelling promo with custom kinetic typography.",
+    year: "2026",
+    client: "Highlight Motion",
+    tools: ["DaVinci Resolve", "Cinema Camera", "Typography FX"],
+    duration: "0:20",
     featured: true
   },
   {
@@ -275,17 +320,17 @@ export const portfolioItems = [
 ];
 
 export const ARTIST_INFO = {
-  name: "SHAMVIL",
+  name: "SHAMVIL PORTFOLIO",
   title: "Creative Director / Filmmaker / Visual Artist",
-  tagline: "Crafting visual narratives across motion graphics, cinematic film, and 3D art.",
-  bio: "I am a multidisciplinary visual director and artist specializing in high-impact visual storytelling. My work bridges the gap between commercial filmmaking, 3D motion design, and digital art direction.",
+  tagline: "Specializing in Commercial Film Directing, 9:16 Social Video Campaigns, DaVinci Color Grading & 3D Motion Graphics.",
+  bio: "Multidisciplinary Creative Director, Filmmaker, and Video Editor specializing in high-impact visual storytelling. Proven expertise across commercial 16:9 brand films, 9:16 vertical reels for social campaigns, advanced DaVinci Resolve color grading, and 3D motion graphics.",
   location: "Worldwide / Remote",
   email: "hello@shamvil.design",
   stats: [
-    { label: "Years Experience", value: "3+" },
-    { label: "Projects Completed", value: "60+" },
-    { label: "Design Awards", value: "8" },
-    { label: "Client Brands", value: "25+" }
+    { label: "Primary Focus", value: "Commercial Directing" },
+    { label: "Social Format", value: "9:16 Vertical Reels" },
+    { label: "Post-Production", value: "DaVinci Color Grade" },
+    { label: "Visual FX", value: "3D & Motion Graphics" }
   ],
   skills: [
     "Commercial Directing",
