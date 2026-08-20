@@ -19,6 +19,8 @@ export function renderAbout(element) {
           src="/profile-avatar.png" 
           alt="${ARTIST_INFO.name}" 
           class="about-image" 
+          decoding="async"
+          fetchpriority="high"
         />
         <div class="about-image-overlay">
           <span class="about-badge">SHAMVIL • CREATIVE DIRECTOR</span>

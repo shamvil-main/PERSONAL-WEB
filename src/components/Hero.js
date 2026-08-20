@@ -30,7 +30,7 @@ export function renderHero(element) {
 
       <!-- Center Profile Picture Box -->
       <div class="hero-avatar-box">
-        <img src="/profile-avatar.png" alt="Shamvil Profile" class="hero-avatar-img" />
+        <img src="/profile-avatar.png" alt="Shamvil Profile" class="hero-avatar-img" decoding="async" fetchpriority="high" />
         <div class="avatar-ring-glow"></div>
         <div class="avatar-camera-crosshair top-l">+</div>
         <div class="avatar-camera-crosshair top-r">+</div>
