@@ -6,7 +6,7 @@ export function renderNavbar(element) {
   element.innerHTML = `
     <div class="nav-container">
       <!-- Executive Brand Logo & Title -->
-      <a href="#hero" class="brand-logo" aria-label="Shamvil Portfolio Home">
+      <a href="#home" class="brand-logo" aria-label="Shamvil Personal Website Home">
         <div class="nav-avatar-wrapper">
           <img src="/profile-avatar.png" alt="Shamvil" class="nav-avatar" />
           <span class="nav-avatar-status-dot" title="Available for Roles"></span>
@@ -26,9 +26,10 @@ export function renderNavbar(element) {
 
       <!-- Navigation Links -->
       <ul id="nav-menu" class="nav-links">
-        <li><a href="#work" class="nav-link active">Work</a></li>
-        <li><a href="#about" class="nav-link">About</a></li>
-        <li><a href="#contact" class="nav-link">Contact</a></li>
+        <li><a href="#home" class="nav-link" data-nav="home">Home</a></li>
+        <li><a href="#portfolio" class="nav-link" data-nav="portfolio">Portfolio</a></li>
+        <li><a href="#about" class="nav-link" data-nav="about">About</a></li>
+        <li><a href="#contact" class="nav-link" data-nav="contact">Contact</a></li>
         <li class="mobile-only-status">
           <a href="#contact" class="nav-cta-btn">Let's Talk →</a>
         </li>
