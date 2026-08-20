@@ -90,23 +90,39 @@ export function renderNavbar(element) {
     }
   });
 
-  // IntersectionObserver for active link highlighting
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-link');
-
+  // IntersectionObserver / Scroll listener for active link highlighting (Home View only)
   window.addEventListener('scroll', () => {
-    let current = '';
+    const hash = window.location.hash.toLowerCase() || '#home';
+    const isPortfolio = hash.includes('#portfolio') || hash.includes('#work') || hash.includes('#gallery');
+    
+    if (isPortfolio) {
+      // On portfolio page, keep portfolio link active
+      navLinks.forEach(link => {
+        if (link.getAttribute('data-nav') === 'portfolio') {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+      return;
+    }
+
+    // On Home view, update section highlighting
+    const sections = document.querySelectorAll('section[id]');
+    let current = 'home';
     sections.forEach(section => {
-      const sectionTop = section.offsetTop - 120;
+      const sectionTop = section.offsetTop - 150;
       if (window.scrollY >= sectionTop) {
         current = section.getAttribute('id');
       }
     });
 
     navLinks.forEach(link => {
-      link.classList.remove('active');
-      if (link.getAttribute('href') === `#${current}`) {
+      const navKey = link.getAttribute('data-nav');
+      if (navKey === current || (current === 'hero' && navKey === 'home')) {
         link.classList.add('active');
+      } else {
+        link.classList.remove('active');
       }
     });
   });

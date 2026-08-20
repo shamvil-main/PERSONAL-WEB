@@ -43,7 +43,7 @@ function initApp() {
 /**
  * Client-Side Router for HomeView vs PortfolioView with Direct Video Link & Admin Modal Support
  */
-function handleRoute() {
+export function handleRoute() {
   const fullHash = window.location.hash || '#home';
   const appContainer = document.getElementById('app');
   if (!appContainer) return;
@@ -69,7 +69,7 @@ function handleRoute() {
   const isPortfolioRoute = cleanHash === '#portfolio' || cleanHash === '#work' || cleanHash === '#gallery' || directItemId !== null;
 
   if (isPortfolioRoute) {
-    if (currentView !== 'portfolio') {
+    if (currentView !== 'portfolio' || appContainer.querySelector('#hero')) {
       currentView = 'portfolio';
       renderPortfolioView(appContainer);
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -77,7 +77,7 @@ function handleRoute() {
     updateNavActiveState('portfolio');
   } else {
     // Home View (handles #home, #hero, #about, #contact, or empty)
-    if (currentView !== 'home') {
+    if (currentView !== 'home' || !appContainer.querySelector('#hero')) {
       currentView = 'home';
       renderHomeView(appContainer);
     }
@@ -90,7 +90,7 @@ function handleRoute() {
       scrollToSection('#contact');
     } else {
       updateNavActiveState('home');
-      if (cleanHash === '#home' || cleanHash === '#hero') {
+      if (cleanHash === '#home' || cleanHash === '#hero' || cleanHash === '') {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }
