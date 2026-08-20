@@ -10,8 +10,8 @@ import { portfolioItems } from '../data/portfolioData.js';
 import { openLightbox } from './Lightbox.js';
 
 export function renderHomeView(container) {
-  // Get top 3 featured video items for the home teaser grid
-  const featuredItems = portfolioItems.filter(item => item.featured && item.mediaType === 'video').slice(0, 3);
+  // Get top 3 featured vertical 9:16 reel videos for uniform home teaser grid
+  const featuredItems = portfolioItems.filter(item => item.featured && item.aspectRatio === '9:16').slice(0, 3);
 
   container.innerHTML = `
     <!-- 1. Hero Section -->
