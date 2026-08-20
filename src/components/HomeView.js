@@ -95,6 +95,8 @@ export function renderHomeView(container) {
 
   // Attach Lightbox click handlers to Teaser Cards
   const teaserCards = container.querySelectorAll('.teaser-card');
+  const isMobile = window.innerWidth <= 768 || ('ontouchstart' in window);
+
   teaserCards.forEach(card => {
     const id = card.getAttribute('data-id');
     const handleOpen = () => openLightbox(id);
@@ -107,9 +109,9 @@ export function renderHomeView(container) {
       }
     });
 
-    // Auto-play video on hover/intersection
+    // Auto-play video on hover/intersection (Desktop only for max mobile performance)
     const video = card.querySelector('.card-video');
-    if (video && 'IntersectionObserver' in window) {
+    if (video && !isMobile && 'IntersectionObserver' in window) {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {

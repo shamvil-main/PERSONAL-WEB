@@ -1,7 +1,6 @@
 /**
  * Interactive Background Micro-Elements Physics System
- * Creates floating background elements (crosshairs, sparkles, film marks, rings) 
- * that float continuously and react/wiggle dynamically to mouse movement!
+ * Optimized for Mobile & High Performance (Zero Layout Thrashing!)
  */
 
 export function initInteractiveBackground() {
@@ -27,7 +26,9 @@ export function initInteractiveBackground() {
     { type: 'star', icon: '✨' }
   ];
 
-  const totalElements = 24;
+  // Use fewer elements on mobile for maximum GPU/CPU efficiency
+  const isMobile = window.innerWidth <= 768 || ('ontouchstart' in window);
+  const totalElements = isMobile ? 12 : 22;
   const elementsData = [];
 
   container.innerHTML = '';
@@ -39,11 +40,11 @@ export function initInteractiveBackground() {
     el.innerHTML = item.icon;
 
     // Random initial positioning across viewport
-    const posX = Math.random() * 95; // %
-    const posY = Math.random() * 95; // %
-    const scale = 0.6 + Math.random() * 0.8;
-    const depth = 0.2 + Math.random() * 0.8; // Parallax depth coefficient
-    const floatSpeed = 3 + Math.random() * 4; // Floating duration
+    const posX = Math.random() * 92;
+    const posY = Math.random() * 92;
+    const scale = 0.6 + Math.random() * 0.7;
+    const depth = 0.2 + Math.random() * 0.7;
+    const floatSpeed = 4 + Math.random() * 5;
 
     el.style.left = `${posX}vw`;
     el.style.top = `${posY}vh`;
@@ -53,82 +54,55 @@ export function initInteractiveBackground() {
 
     elementsData.push({
       el,
-      baseX: posX,
-      baseY: posY,
+      depth,
+      scale,
       currentX: 0,
       currentY: 0,
       targetX: 0,
-      targetY: 0,
-      depth,
-      scale
+      targetY: 0
     });
   }
 
-  // Mouse interaction state
+  // If mobile, let CSS handle floating animations (0 JS overhead on mobile scroll!)
+  if (isMobile) return;
+
+  // Desktop Mouse Interaction State
   let mouseX = window.innerWidth / 2;
   let mouseY = window.innerHeight / 2;
   let targetMouseX = mouseX;
   let targetMouseY = mouseY;
+  let animationFrameId = null;
 
-  window.addEventListener('mousemove', (e) => {
+  const handleMouseMove = (e) => {
     targetMouseX = e.clientX;
     targetMouseY = e.clientY;
-  });
+  };
 
-  // Touch movement support for mobile
-  window.addEventListener('touchmove', (e) => {
-    if (e.touches.length > 0) {
-      targetMouseX = e.touches[0].clientX;
-      targetMouseY = e.touches[0].clientY;
-    }
-  }, { passive: true });
+  window.addEventListener('mousemove', handleMouseMove, { passive: true });
 
-  // Physics animation loop using requestAnimationFrame
   function updatePhysics() {
-    // Easing mouse coordinates
     mouseX += (targetMouseX - mouseX) * 0.08;
     mouseY += (targetMouseY - mouseY) * 0.08;
 
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
 
-    const deltaX = (mouseX - centerX) / centerX; // -1 to 1
-    const deltaY = (mouseY - centerY) / centerY; // -1 to 1
+    const deltaX = (mouseX - centerX) / centerX;
+    const deltaY = (mouseY - centerY) / centerY;
 
     elementsData.forEach(item => {
-      // Calculate repulsion / parallax offset based on distance to mouse
-      const elementRect = item.el.getBoundingClientRect();
-      const elCenterX = elementRect.left + elementRect.width / 2;
-      const elCenterY = elementRect.top + elementRect.height / 2;
+      item.targetX = deltaX * 35 * item.depth;
+      item.targetY = deltaY * 35 * item.depth;
 
-      const distMouseX = mouseX - elCenterX;
-      const distMouseY = mouseY - elCenterY;
-      const dist = Math.sqrt(distMouseX * distMouseX + distMouseY * distMouseY);
-
-      // Mouse repulsion radius (300px)
-      let pushX = 0;
-      let pushY = 0;
-      if (dist < 300 && dist > 0) {
-        const force = (1 - dist / 300) * 35 * item.depth;
-        pushX = -(distMouseX / dist) * force;
-        pushY = -(distMouseY / dist) * force;
-      }
-
-      // Combine parallax + mouse repulsion
-      item.targetX = deltaX * 45 * item.depth + pushX;
-      item.targetY = deltaY * 45 * item.depth + pushY;
-
-      // Smooth lerp
       item.currentX += (item.targetX - item.currentX) * 0.1;
       item.currentY += (item.targetY - item.currentY) * 0.1;
 
-      // Apply 3D transform with rotation wiggle
-      const rotate = item.currentX * 0.5;
-      item.el.style.transform = `translate3d(${item.currentX}px, ${item.currentY}px, 0) scale(${item.scale}) rotate(${rotate}deg)`;
+      const rotate = item.currentX * 0.4;
+      item.el.style.transform = `translate3d(${item.currentX.toFixed(1)}px, ${item.currentY.toFixed(1)}px, 0) scale(${item.scale.toFixed(2)}) rotate(${rotate.toFixed(1)}deg)`;
     });
 
-    requestAnimationFrame(updatePhysics);
+    animationFrameId = requestAnimationFrame(updatePhysics);
   }
 
-  requestAnimationFrame(updatePhysics);
+  animationFrameId = requestAnimationFrame(updatePhysics);
 }
