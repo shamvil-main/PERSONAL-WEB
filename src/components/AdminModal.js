@@ -1,14 +1,15 @@
 /**
  * Admin Video Manager & Direct Link Generator Component
- * Allows Shamvil to add videos directly on the website without touching code!
- * Supports Unlisted links, custom video paths, aspect ratios, and details.
+ * Allows Shamvil to UPLOAD VIDEO FILES directly from phone/computer without touching code!
  */
 
 import { addCustomPortfolioItem, deleteCustomPortfolioItem, getAllPortfolioItems } from '../data/portfolioData.js';
+import { saveMediaBlob, deleteMediaBlob, generateVideoPoster } from '../utils/mediaStorage.js';
 import { copyToClipboard, showToast } from '../utils/helpers.js';
 
 let isAdminUnlocked = false;
 const DEFAULT_PIN = "shamvil2026"; // Secret Admin PIN
+let selectedVideoFile = null;
 
 export function initAdminModal(rootContainer) {
   rootContainer.innerHTML = `
@@ -29,7 +30,7 @@ export function initAdminModal(rootContainer) {
           <div class="admin-pin-box">
             <span class="pin-lock-icon">🔒</span>
             <h3>Security Verification</h3>
-            <p>Enter your secret admin passcode to manage portfolio videos and unlisted client links.</p>
+            <p>Enter your secret admin passcode to upload videos and manage private unlisted links.</p>
             <form id="admin-pin-form" class="admin-pin-form">
               <input 
                 type="password" 
@@ -44,7 +45,7 @@ export function initAdminModal(rootContainer) {
                 <span>→</span>
               </button>
             </form>
-            <small class="pin-hint">Default Passcode: <strong>shamvil2026</strong></small>
+            <small class="pin-hint">Passcode: <strong>shamvil2026</strong></small>
           </div>
         </div>
 
@@ -52,17 +53,40 @@ export function initAdminModal(rootContainer) {
         <div id="admin-dashboard-screen" class="admin-screen">
           <!-- Navigation Tabs -->
           <div class="admin-tabs">
-            <button id="tab-btn-add" class="admin-tab-btn active">➕ Add New Video / Work</button>
+            <button id="tab-btn-add" class="admin-tab-btn active">🎬 Upload Video File</button>
             <button id="tab-btn-manage" class="admin-tab-btn">📋 Manage Existing Items</button>
           </div>
 
-          <!-- Tab 1: Add New Video Form -->
+          <!-- Tab 1: Upload Video Form -->
           <div id="admin-tab-add" class="admin-tab-content active">
             <form id="add-video-form" class="admin-form">
+              <!-- FILE UPLOAD DROPZONE FIELD -->
+              <div class="form-group">
+                <label class="form-label">CHOOSE VIDEO FILE FROM PHONE / COMPUTER *</label>
+                <div id="file-dropzone" class="file-upload-dropzone">
+                  <input type="file" id="vid-file-input" class="file-input-hidden" accept="video/*,image/*" />
+                  
+                  <div id="dropzone-idle" class="dropzone-content">
+                    <span class="dropzone-icon">📁</span>
+                    <span class="dropzone-text">Click or Drag &amp; Drop Video File Here</span>
+                    <span class="dropzone-sub">Pick any MP4, MOV, or WEBM video from gallery or files</span>
+                  </div>
+
+                  <div id="dropzone-selected" class="dropzone-selected-info" style="display: none;">
+                    <span class="selected-file-icon">🎬</span>
+                    <div class="selected-file-details">
+                      <span id="selected-file-name" class="selected-file-name">filename.mp4</span>
+                      <span id="selected-file-size" class="selected-file-size">0 MB</span>
+                    </div>
+                    <button type="button" id="btn-change-file" class="btn-change-file">Change File</button>
+                  </div>
+                </div>
+              </div>
+
               <div class="form-row">
                 <div class="form-group flex-2">
                   <label for="vid-title" class="form-label">VIDEO / PROJECT TITLE *</label>
-                  <input type="text" id="vid-title" class="form-input" placeholder="e.g. LUXURY AUTOMOTIVE COMMERCIAL" required />
+                  <input type="text" id="vid-title" class="form-input" placeholder="e.g. LUXURY REEL COMMERCIAL" required />
                 </div>
                 <div class="form-group flex-1">
                   <label for="vid-category" class="form-label">CATEGORY *</label>
@@ -81,28 +105,16 @@ export function initAdminModal(rootContainer) {
                   <label for="vid-aspect" class="form-label">ASPECT RATIO *</label>
                   <select id="vid-aspect" class="form-input">
                     <option value="9:16">9:16 (Vertical Reel / TikTok / Shorts)</option>
-                    <option value="16:9">16:9 (Widescreen Film / YouTube)</option>
+                    <option value="16:9">16:9 (Widescreen Cinema / YouTube)</option>
                     <option value="1:1">1:1 (Square)</option>
                     <option value="4:5">4:5 (Instagram Portrait)</option>
                   </select>
                 </div>
 
                 <div class="form-group flex-1">
-                  <label for="vid-duration" class="form-label">DURATION (e.g. 0:45)</label>
+                  <label for="vid-duration" class="form-label">DURATION (Auto-detected or enter 0:45)</label>
                   <input type="text" id="vid-duration" class="form-input" placeholder="0:45" />
                 </div>
-              </div>
-
-              <div class="form-group">
-                <label for="vid-src" class="form-label">VIDEO FILE PATH / URL *</label>
-                <input 
-                  type="text" 
-                  id="vid-src" 
-                  class="form-input" 
-                  placeholder="e.g. /VIDEOS/my_new_video.mp4 OR https://vimeo.com/..." 
-                  required 
-                />
-                <small class="form-hint">Tip: Place your video file inside <code>public/VIDEOS/</code> folder and enter <code>/VIDEOS/filename.mp4</code>!</small>
               </div>
 
               <div class="form-row">
@@ -130,7 +142,7 @@ export function initAdminModal(rootContainer) {
               <div class="admin-checkbox-group">
                 <label class="checkbox-label highlight-unlisted">
                   <input type="checkbox" id="vid-unlisted" />
-                  <span>🔒 <strong>Make Unlisted (Secret Client Link Only)</strong> — Hidden from main website gallery! Accessible only via direct share link.</span>
+                  <span>🔒 <strong>Make Unlisted (Secret Client Link Only)</strong> — Hidden from public website! Accessible only via direct share link.</span>
                 </label>
 
                 <label class="checkbox-label">
@@ -139,8 +151,8 @@ export function initAdminModal(rootContainer) {
                 </label>
               </div>
 
-              <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;">
-                <span>Publish Video / Project</span>
+              <button type="submit" id="btn-submit-upload" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;">
+                <span>Upload &amp; Save Video</span>
                 <span>→</span>
               </button>
             </form>
@@ -163,10 +175,83 @@ export function initAdminModal(rootContainer) {
   const pinForm = document.getElementById('admin-pin-form');
   const addForm = document.getElementById('add-video-form');
 
+  const fileInput = document.getElementById('vid-file-input');
+  const dropzone = document.getElementById('file-dropzone');
+  const dropzoneIdle = document.getElementById('dropzone-idle');
+  const dropzoneSelected = document.getElementById('dropzone-selected');
+  const fileNameDisplay = document.getElementById('selected-file-name');
+  const fileSizeDisplay = document.getElementById('selected-file-size');
+  const changeFileBtn = document.getElementById('btn-change-file');
+
   closeBtn.addEventListener('click', closeAdminModal);
   modal.addEventListener('click', (e) => {
     if (e.target === modal) closeAdminModal();
   });
+
+  // File Picker Trigger
+  dropzone.addEventListener('click', (e) => {
+    if (e.target !== changeFileBtn) {
+      fileInput.click();
+    }
+  });
+
+  changeFileBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    fileInput.click();
+  });
+
+  // Drag & Drop visual feedback
+  dropzone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropzone.classList.add('dragover');
+  });
+  dropzone.addEventListener('dragleave', () => {
+    dropzone.classList.remove('dragover');
+  });
+  dropzone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropzone.classList.remove('dragover');
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      fileInput.files = e.dataTransfer.files;
+      handleFileSelected(e.dataTransfer.files[0]);
+    }
+  });
+
+  fileInput.addEventListener('change', (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      handleFileSelected(e.target.files[0]);
+    }
+  });
+
+  function handleFileSelected(file) {
+    selectedVideoFile = file;
+    dropzoneIdle.style.display = 'none';
+    dropzoneSelected.style.display = 'flex';
+
+    fileNameDisplay.textContent = file.name;
+    const mbSize = (file.size / (1024 * 1024)).toFixed(1);
+    fileSizeDisplay.textContent = `${mbSize} MB`;
+
+    // Auto-fill Title if empty
+    const titleInput = document.getElementById('vid-title');
+    if (!titleInput.value) {
+      const cleanTitle = file.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ").toUpperCase();
+      titleInput.value = cleanTitle;
+    }
+
+    // Auto-detect video duration if it's a video file
+    if (file.type.startsWith('video/')) {
+      const tempVideo = document.createElement('video');
+      tempVideo.src = URL.createObjectURL(file);
+      tempVideo.onloadedmetadata = () => {
+        const mins = Math.floor(tempVideo.duration / 60);
+        const secs = Math.floor(tempVideo.duration % 60);
+        const formatted = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        const durationInput = document.getElementById('vid-duration');
+        if (!durationInput.value) durationInput.value = formatted;
+      };
+    }
+  }
 
   // PIN Form Submission
   pinForm.addEventListener('submit', (e) => {
@@ -204,58 +289,92 @@ export function initAdminModal(rootContainer) {
     renderManageItemsList();
   });
 
-  // Add Video Submission
-  addForm.addEventListener('submit', (e) => {
+  // Upload Video Form Submission
+  addForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const title = document.getElementById('vid-title').value.trim();
-    const category = document.getElementById('vid-category').value;
-    const aspect = document.getElementById('vid-aspect').value;
-    const src = document.getElementById('vid-src').value.trim();
-    const duration = document.getElementById('vid-duration').value.trim() || "0:45";
-    const client = document.getElementById('vid-client').value.trim() || "Independent";
-    const year = document.getElementById('vid-year').value.trim() || "2026";
-    const toolsInput = document.getElementById('vid-tools').value.trim();
-    const tools = toolsInput ? toolsInput.split(',').map(t => t.trim()) : ["DaVinci Resolve"];
-    const description = document.getElementById('vid-desc').value.trim() || `${title} cinematic video showcase.`;
-    const unlisted = document.getElementById('vid-unlisted').checked;
-    const featured = document.getElementById('vid-featured').checked;
-
-    const newId = `custom-vid-${Date.now()}`;
-
-    const newItem = {
-      id: newId,
-      title,
-      category,
-      mediaType: category === 'Photography' || category === 'Design' ? 'image' : 'video',
-      aspectRatio: aspect,
-      src,
-      poster: src.endsWith('.mp4') ? `${src}.png` : src,
-      description,
-      year,
-      client,
-      tools,
-      duration,
-      featured,
-      unlisted
-    };
-
-    addCustomPortfolioItem(newItem);
-    addForm.reset();
-
-    const currentUrl = window.location.origin + window.location.pathname;
-    const shareLink = `${currentUrl}#portfolio?id=${newId}`;
-
-    if (unlisted) {
-      copyToClipboard(shareLink, 'Unlisted secret link copied to clipboard!');
-      showToast(`Secret Unlisted Video Created! Link copied to clipboard.`, 'success', 5000);
-    } else {
-      showToast(`Video "${title}" published successfully!`, 'success');
+    if (!selectedVideoFile) {
+      showToast('Please select a video file to upload!', 'error');
+      fileInput.click();
+      return;
     }
 
-    // Refresh current view
-    window.dispatchEvent(new HashChangeEvent('hashchange'));
-    renderManageItemsList();
+    const submitBtn = document.getElementById('btn-submit-upload');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `<span>Saving &amp; Processing Video...</span>`;
+
+    try {
+      const title = document.getElementById('vid-title').value.trim();
+      const category = document.getElementById('vid-category').value;
+      const aspect = document.getElementById('vid-aspect').value;
+      const duration = document.getElementById('vid-duration').value.trim() || "0:45";
+      const client = document.getElementById('vid-client').value.trim() || "Independent";
+      const year = document.getElementById('vid-year').value.trim() || "2026";
+      const toolsInput = document.getElementById('vid-tools').value.trim();
+      const tools = toolsInput ? toolsInput.split(',').map(t => t.trim()) : ["DaVinci Resolve"];
+      const description = document.getElementById('vid-desc').value.trim() || `${title} video project.`;
+      const unlisted = document.getElementById('vid-unlisted').checked;
+      const featured = document.getElementById('vid-featured').checked;
+
+      const newId = `custom-vid-${Date.now()}`;
+
+      // Save video file to IndexedDB
+      await saveMediaBlob(newId, selectedVideoFile);
+
+      // Generate poster thumbnail frame if video
+      let posterDataUrl = '';
+      if (selectedVideoFile.type.startsWith('video/')) {
+        posterDataUrl = await generateVideoPoster(selectedVideoFile);
+      }
+
+      const activeObjectUrl = URL.createObjectURL(selectedVideoFile);
+
+      const newItem = {
+        id: newId,
+        title,
+        category,
+        mediaType: selectedVideoFile.type.startsWith('image/') ? 'image' : 'video',
+        aspectRatio: aspect,
+        src: activeObjectUrl,
+        poster: posterDataUrl || activeObjectUrl,
+        description,
+        year,
+        client,
+        tools,
+        duration,
+        featured,
+        unlisted,
+        hasBlob: true
+      };
+
+      addCustomPortfolioItem(newItem);
+
+      // Reset Form State
+      addForm.reset();
+      selectedVideoFile = null;
+      dropzoneIdle.style.display = 'flex';
+      dropzoneSelected.style.display = 'none';
+
+      const currentUrl = window.location.origin + window.location.pathname;
+      const shareLink = `${currentUrl}#portfolio?id=${newId}`;
+
+      if (unlisted) {
+        copyToClipboard(shareLink, 'Unlisted secret link copied to clipboard!');
+        showToast(`Secret Unlisted Video Created! Link copied to clipboard.`, 'success', 5000);
+      } else {
+        showToast(`Video "${title}" uploaded and saved successfully!`, 'success');
+      }
+
+      // Refresh page view
+      window.dispatchEvent(new HashChangeEvent('hashchange'));
+      renderManageItemsList();
+    } catch (err) {
+      console.error(err);
+      showToast('Failed to process video upload.', 'error');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = `<span>Upload &amp; Save Video</span><span>→</span>`;
+    }
   });
 }
 
@@ -330,6 +449,7 @@ function renderManageItemsList() {
     btn.addEventListener('click', () => {
       const id = btn.getAttribute('data-id');
       if (confirm('Are you sure you want to delete this project?')) {
+        deleteMediaBlob(id);
         deleteCustomPortfolioItem(id);
         renderManageItemsList();
         window.dispatchEvent(new HashChangeEvent('hashchange'));

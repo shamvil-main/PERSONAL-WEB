@@ -335,7 +335,10 @@ export const portfolioItems = [
   }
 ];
 
+import { getMediaBlobUrl } from '../utils/mediaStorage.js';
+
 const STORAGE_KEY = "shamvil_custom_portfolio_items";
+const activeBlobUrlCache = new Map();
 
 function getStoredCustomItems() {
   try {
@@ -365,10 +368,30 @@ export function deleteCustomPortfolioItem(itemId) {
   const stored = getStoredCustomItems();
   const filtered = stored.filter(item => item.id !== itemId);
   saveStoredCustomItems(filtered);
+  activeBlobUrlCache.delete(itemId);
 }
 
 export function getAllPortfolioItems() {
   const custom = getStoredCustomItems();
+
+  // Ensure blob URLs are resolved for custom uploaded videos
+  custom.forEach(async (item) => {
+    if (item.hasBlob && (!item.src || item.src.startsWith('blob:'))) {
+      if (activeBlobUrlCache.has(item.id)) {
+        item.src = activeBlobUrlCache.get(item.id);
+      } else {
+        const resolvedUrl = await getMediaBlobUrl(item.id);
+        if (resolvedUrl) {
+          item.src = resolvedUrl;
+          if (!item.poster || item.poster.startsWith('blob:')) {
+            item.poster = resolvedUrl;
+          }
+          activeBlobUrlCache.set(item.id, resolvedUrl);
+        }
+      }
+    }
+  });
+
   return [...custom, ...portfolioItems];
 }
 
