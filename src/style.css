@@ -2299,73 +2299,84 @@ button:active, a.btn-primary:active, a.btn-secondary:active, .social-btn:active,
   }
 
   .work-section, .about-section, .contact-section {
-    padding: 3.5rem 1rem;
-    padding-bottom: max(3.5rem, env(safe-area-inset-bottom));
+    padding: 3rem 1rem 6rem 1rem !important;
     width: 100%;
     max-width: 100vw;
-    box-sizing: border-border;
+    box-sizing: border-box !important;
     overflow-x: hidden;
   }
 
   .section-title {
-    font-size: clamp(1.8rem, 7.5vw, 2.6rem);
+    font-size: clamp(1.75rem, 7.5vw, 2.5rem);
     word-break: break-word;
   }
 
   /* About Section Mobile Fit */
   .about-grid {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 2rem;
     width: 100%;
     max-width: 100%;
+    box-sizing: border-box;
   }
 
   .about-image-card {
     width: 100%;
-    max-width: 320px;
+    max-width: 270px;
     margin: 0 auto;
     aspect-ratio: 1 / 1;
     border-radius: 20px;
+    box-sizing: border-box;
+    flex-shrink: 0;
   }
 
   .about-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
   }
 
   .about-content {
     width: 100%;
     max-width: 100%;
     gap: 1.5rem;
+    box-sizing: border-box;
   }
 
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    gap: 0.85rem;
     width: 100%;
+    box-sizing: border-box;
   }
 
   .pills-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.45rem;
     width: 100%;
     max-width: 100%;
+    box-sizing: border-box;
   }
 
   .skill-pill {
-    font-size: 0.78rem;
-    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+    padding: 0.4rem 0.75rem;
     white-space: normal;
     word-break: break-word;
     max-width: 100%;
+    box-sizing: border-box;
+    text-align: center;
   }
 
   .contact-container { 
-    padding: 2.25rem 1.15rem; 
+    padding: 2rem 1rem; 
     border-radius: var(--radius-md);
     width: 100%;
+    box-sizing: border-box;
   }
 
   /* Lightbox Controls Mobile Optimization */
