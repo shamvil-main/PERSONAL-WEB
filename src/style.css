@@ -1651,6 +1651,315 @@ button {
   flex-wrap: wrap;
 }
 
+/* ==========================================================================
+   ADMIN CONTENT MANAGER & SECRET PASSCODE MODAL STYLES
+   ========================================================================== */
+.admin-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(5, 5, 8, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 1500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-normal), visibility var(--transition-normal);
+}
+
+.admin-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.admin-modal-card {
+  background: rgba(13, 13, 20, 0.96);
+  border: 1.5px dashed var(--accent-cyan);
+  border-radius: var(--radius-lg);
+  width: 92vw;
+  max-width: 760px;
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 2.25rem;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.9), 0 0 40px rgba(56, 189, 248, 0.15);
+  position: relative;
+}
+
+.admin-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px dashed var(--border-subtle);
+  margin-bottom: 1.5rem;
+}
+
+.admin-header-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.admin-header-title h2 {
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.admin-badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 0.25rem 0.6rem;
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px dashed var(--accent-cyan);
+  border-radius: var(--radius-full);
+  color: var(--accent-cyan);
+  letter-spacing: 0.1em;
+}
+
+.admin-close-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px dashed var(--border-subtle);
+  color: var(--text-main);
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.admin-close-btn:hover {
+  background: rgba(244, 63, 94, 0.2);
+  border-color: #f43f5e;
+  color: #f43f5e;
+}
+
+/* Screens & Tabs */
+.admin-screen {
+  display: none;
+}
+
+.admin-screen.active {
+  display: block;
+}
+
+.admin-pin-box {
+  text-align: center;
+  padding: 2rem 1rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.pin-lock-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.admin-pin-box h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.admin-pin-box p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 1.75rem;
+}
+
+.pin-input {
+  text-align: center;
+  font-size: 1.1rem;
+  letter-spacing: 0.2em;
+  margin-bottom: 1rem;
+}
+
+.pin-hint {
+  display: block;
+  margin-top: 1.25rem;
+  color: var(--text-dim);
+  font-size: 0.8rem;
+}
+
+/* Dashboard Tabs */
+.admin-tabs {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+  border-bottom: 1px dashed var(--border-subtle);
+  padding-bottom: 1rem;
+}
+
+.admin-tab-btn {
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px dashed var(--border-subtle);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 700;
+  transition: all var(--transition-fast);
+}
+
+.admin-tab-btn.active {
+  background: var(--accent-cyan);
+  color: var(--bg-dark);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+}
+
+.admin-tab-content {
+  display: none;
+}
+
+.admin-tab-content.active {
+  display: block;
+}
+
+/* Form Controls */
+.form-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.flex-1 { flex: 1; min-width: 200px; }
+.flex-2 { flex: 2; min-width: 260px; }
+
+.form-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.35rem;
+  display: block;
+}
+
+.admin-checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin: 1.25rem 0;
+  padding: 1.15rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px dashed var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+  color: var(--text-main);
+  cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-top: 0.15rem;
+  accent-color: var(--accent-cyan);
+  cursor: pointer;
+}
+
+.highlight-unlisted {
+  color: #fbbf24;
+}
+
+/* Manage Items Grid */
+.manage-list-header {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.manage-items-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  max-height: 440px;
+  overflow-y: auto;
+}
+
+.admin-item-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed var(--border-subtle);
+  border-radius: var(--radius-md);
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.unlisted-card {
+  border-color: rgba(251, 191, 36, 0.4);
+  background: rgba(251, 191, 36, 0.03);
+}
+
+.item-card-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  text-transform: uppercase;
+  display: block;
+}
+
+.item-card-title {
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.item-card-sub {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.item-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-copy-link, .btn-delete-item {
+  padding: 0.45rem 0.85rem;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 700;
+  transition: all var(--transition-fast);
+}
+
+.btn-copy-link {
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px dashed var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+
+.btn-copy-link:hover {
+  background: var(--accent-cyan);
+  color: var(--bg-dark);
+}
+
+.btn-delete-item {
+  background: rgba(244, 63, 94, 0.12);
+  border: 1px dashed rgba(244, 63, 94, 0.4);
+  color: #f43f5e;
+}
+
+.btn-delete-item:hover {
+  background: #f43f5e;
+  color: white;
+}
+
 .social-btn {
   padding: 0.75rem 1.25rem;
   background: rgba(255, 255, 255, 0.03);

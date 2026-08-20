@@ -6,12 +6,13 @@
 import { renderHero } from './Hero.js';
 import { renderAbout } from './About.js';
 import { renderContact } from './Contact.js';
-import { portfolioItems } from '../data/portfolioData.js';
+import { getPublicPortfolioItems } from '../data/portfolioData.js';
 import { openLightbox } from './Lightbox.js';
 
 export function renderHomeView(container) {
+  const publicItems = getPublicPortfolioItems();
   // Get top 3 featured vertical 9:16 reel videos for uniform home teaser grid
-  const featuredItems = portfolioItems.filter(item => item.featured && item.aspectRatio === '9:16').slice(0, 3);
+  const featuredItems = publicItems.filter(item => item.featured && item.aspectRatio === '9:16').slice(0, 3);
 
   container.innerHTML = `
     <!-- 1. Hero Section -->

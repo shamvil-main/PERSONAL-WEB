@@ -30,6 +30,7 @@ export function renderNavbar(element) {
         <li><a href="#portfolio" class="nav-link" data-nav="portfolio">Portfolio</a></li>
         <li><a href="#about" class="nav-link" data-nav="about">About</a></li>
         <li><a href="#contact" class="nav-link" data-nav="contact">Contact</a></li>
+        <li><a href="#admin" class="nav-link nav-admin-btn" data-nav="admin">Admin 🔒</a></li>
         <li class="mobile-only-status">
           <a href="#contact" class="nav-cta-btn">Let's Talk →</a>
         </li>
@@ -37,10 +38,10 @@ export function renderNavbar(element) {
 
       <!-- Desktop Right Action Bar -->
       <div class="nav-actions-desktop">
-        <div class="status-badge">
+        <a href="#admin" class="status-badge admin-badge-btn" title="Open Admin Content Manager">
           <span class="status-dot"></span>
-          <span>Available 2026</span>
-        </div>
+          <span>Admin Portal 🔒</span>
+        </a>
         <a href="#contact" class="nav-cta-btn">Let's Talk →</a>
       </div>
     </div>

@@ -2,7 +2,7 @@
  * Fullscreen Lightbox Modal & Media Viewer Component
  */
 
-import { portfolioItems } from '../data/portfolioData.js';
+import { getAllPortfolioItems } from '../data/portfolioData.js';
 
 let currentIndex = 0;
 let isLightboxOpen = false;
@@ -76,7 +76,8 @@ function handleSwipe() {
 }
 
 export function openLightbox(itemId) {
-  const index = portfolioItems.findIndex(item => item.id === itemId);
+  const allItems = getAllPortfolioItems();
+  const index = allItems.findIndex(item => item.id === itemId);
   if (index === -1) return;
 
   currentIndex = index;
@@ -106,17 +107,20 @@ export function closeLightbox() {
 }
 
 function nextItem() {
-  currentIndex = (currentIndex + 1) % portfolioItems.length;
+  const allItems = getAllPortfolioItems();
+  currentIndex = (currentIndex + 1) % allItems.length;
   renderLightboxContent();
 }
 
 function prevItem() {
-  currentIndex = (currentIndex - 1 + portfolioItems.length) % portfolioItems.length;
+  const allItems = getAllPortfolioItems();
+  currentIndex = (currentIndex - 1 + allItems.length) % allItems.length;
   renderLightboxContent();
 }
 
 function renderLightboxContent() {
-  const item = portfolioItems[currentIndex];
+  const allItems = getAllPortfolioItems();
+  const item = allItems[currentIndex];
   const mediaBox = document.getElementById('lightbox-media-box');
   const metaBox = document.getElementById('lightbox-meta-box');
 

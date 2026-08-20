@@ -335,18 +335,55 @@ export const portfolioItems = [
   }
 ];
 
+const STORAGE_KEY = "shamvil_custom_portfolio_items";
+
+function getStoredCustomItems() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveStoredCustomItems(items) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+  } catch (e) {
+    console.error("Failed to save to localStorage", e);
+  }
+}
+
+export function addCustomPortfolioItem(newItem) {
+  const stored = getStoredCustomItems();
+  newItem.isCustom = true;
+  stored.unshift(newItem); // Place new video at the top!
+  saveStoredCustomItems(stored);
+}
+
+export function deleteCustomPortfolioItem(itemId) {
+  const stored = getStoredCustomItems();
+  const filtered = stored.filter(item => item.id !== itemId);
+  saveStoredCustomItems(filtered);
+}
+
+export function getAllPortfolioItems() {
+  const custom = getStoredCustomItems();
+  return [...custom, ...portfolioItems];
+}
+
 /**
  * Returns only public items for the main website gallery (hides unlisted items)
  */
 export function getPublicPortfolioItems() {
-  return portfolioItems.filter(item => !item.unlisted);
+  return getAllPortfolioItems().filter(item => !item.unlisted);
 }
 
 /**
  * Returns any portfolio item by ID (including unlisted items for direct share links)
  */
 export function getPortfolioItemById(itemId) {
-  return portfolioItems.find(item => item.id === itemId);
+  return getAllPortfolioItems().find(item => item.id === itemId);
 }
 
 export const ARTIST_INFO = {

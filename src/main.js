@@ -8,6 +8,7 @@ import { renderHomeView } from './components/HomeView.js';
 import { renderPortfolioView } from './components/PortfolioView.js';
 import { initLightbox, openLightbox } from './components/Lightbox.js';
 import { initInteractiveBackground } from './components/InteractiveBg.js';
+import { initAdminModal, openAdminModal } from './components/AdminModal.js';
 
 let currentView = null;
 
@@ -23,7 +24,16 @@ function initApp() {
   const lightboxRoot = document.getElementById('lightbox-root');
   if (lightboxRoot) initLightbox(lightboxRoot);
 
-  // 3. Setup Hash Router
+  // 3. Initialize Admin Modal Container
+  let adminRoot = document.getElementById('admin-root');
+  if (!adminRoot) {
+    adminRoot = document.createElement('div');
+    adminRoot.id = 'admin-root';
+    document.body.appendChild(adminRoot);
+  }
+  initAdminModal(adminRoot);
+
+  // 4. Setup Hash Router
   handleRoute();
   window.addEventListener('hashchange', handleRoute);
 
@@ -31,12 +41,19 @@ function initApp() {
 }
 
 /**
- * Client-Side Router for HomeView vs PortfolioView with Direct Video Link Support
+ * Client-Side Router for HomeView vs PortfolioView with Direct Video Link & Admin Modal Support
  */
 function handleRoute() {
   const fullHash = window.location.hash || '#home';
   const appContainer = document.getElementById('app');
   if (!appContainer) return;
+
+  // Check if opening Admin portal
+  if (fullHash.toLowerCase().includes('#admin')) {
+    openAdminModal();
+    updateNavActiveState('admin');
+    return;
+  }
 
   // Extract direct video ID if present (e.g., #portfolio?id=custom-user-video-1 or #view=unlisted-private-preview-1)
   let directItemId = null;
