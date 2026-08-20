@@ -2453,3 +2453,75 @@ button:active, a.btn-primary:active, a.btn-secondary:active, .social-btn:active,
     font-size: 0.8rem;
   }
 }
+
+/* ==========================================================================
+   FLOATING MOBILE THUMB DOCK NAVIGATION STYLES
+   ========================================================================== */
+.mobile-bottom-dock {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-bottom-dock {
+    display: flex;
+    position: fixed;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 24px);
+    max-width: 440px;
+    background: rgba(13, 13, 20, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1.5px dashed rgba(56, 189, 248, 0.3);
+    border-radius: 28px;
+    padding: 6px;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 1200;
+    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.8), 0 0 25px rgba(56, 189, 248, 0.12);
+  }
+
+  .dock-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px;
+    border-radius: 20px;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: all 0.25s ease;
+    flex: 1;
+    min-height: 48px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .dock-icon {
+    font-size: 1.25rem;
+    line-height: 1;
+    margin-bottom: 2px;
+    transition: transform 0.2s ease;
+  }
+
+  .dock-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  .dock-item.active {
+    background: rgba(56, 189, 248, 0.16);
+    color: var(--accent-cyan);
+    border: 1px dashed var(--accent-cyan);
+  }
+
+  .dock-item.active .dock-icon {
+    transform: translateY(-2px) scale(1.15);
+  }
+
+  /* Add padding to body on mobile so content isn't covered by bottom dock */
+  body {
+    padding-bottom: 80px;
+  }
+}

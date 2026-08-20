@@ -114,7 +114,7 @@ function scrollToSection(selector) {
 }
 
 function updateNavActiveState(activeNav) {
-  const navLinks = document.querySelectorAll('.nav-link');
+  const navLinks = document.querySelectorAll('.nav-link, .dock-item');
   navLinks.forEach(link => {
     const navKey = link.getAttribute('data-nav');
     if (navKey === activeNav) {
