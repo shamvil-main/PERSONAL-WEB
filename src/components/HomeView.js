@@ -34,7 +34,7 @@ export function renderHomeView(container) {
           <p class="section-subtitle">A curated glimpse into recent commercial reels, 3D visual art, and brand films.</p>
         </div>
         <a href="#portfolio" class="btn-secondary view-all-portfolio-btn">
-          <span>View All Works (${portfolioItems.length})</span>
+          <span>View All Works (${publicItems.length})</span>
           <span>→</span>
         </a>
       </div>
