@@ -49,21 +49,33 @@ export function renderNavbar(element) {
   const menuBtn = document.getElementById('mobile-menu-btn');
   const navMenu = document.getElementById('nav-menu');
 
+  const toggleMenu = (openState) => {
+    const shouldOpen = openState !== undefined ? openState : !navMenu.classList.contains('open');
+    element.classList.toggle('nav-open', shouldOpen);
+    menuBtn.classList.toggle('open', shouldOpen);
+    navMenu.classList.toggle('open', shouldOpen);
+    document.body.style.overflow = shouldOpen ? 'hidden' : '';
+  };
+
   if (menuBtn && navMenu) {
-    menuBtn.addEventListener('click', () => {
-      element.classList.toggle('nav-open');
-      menuBtn.classList.toggle('open');
-      navMenu.classList.toggle('open');
+    menuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleMenu();
     });
 
     // Close mobile menu when clicking any nav link
-    const links = navMenu.querySelectorAll('.nav-link');
+    const links = navMenu.querySelectorAll('a');
     links.forEach(link => {
       link.addEventListener('click', () => {
-        element.classList.remove('nav-open');
-        menuBtn.classList.remove('open');
-        navMenu.classList.remove('open');
+        toggleMenu(false);
       });
+    });
+
+    // Close menu on Escape key press
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navMenu.classList.contains('open')) {
+        toggleMenu(false);
+      }
     });
   }
 

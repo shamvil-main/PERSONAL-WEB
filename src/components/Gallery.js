@@ -53,10 +53,14 @@ export function renderGallery(container) {
   // Initial grid build
   buildMasonryGrid();
 
-  // Re-calculate column layout on window resize
-  window.addEventListener('resize', debounce(() => {
+  // Re-calculate column layout on window resize, orientation change, or window load
+  const debouncedRebuild = debounce(() => {
     buildMasonryGrid();
-  }, 150));
+  }, 120);
+
+  window.addEventListener('resize', debouncedRebuild);
+  window.addEventListener('orientationchange', debouncedRebuild);
+  window.addEventListener('load', debouncedRebuild);
 }
 
 /**

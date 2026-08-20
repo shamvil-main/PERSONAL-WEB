@@ -11,7 +11,7 @@ import { renderAbout } from './components/About.js';
 import { renderContact } from './components/Contact.js';
 import { initInteractiveBackground } from './components/InteractiveBg.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+function initApp() {
   // 0. Initialize Interactive Floating Background Physics
   initInteractiveBackground();
 
@@ -40,4 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (contactSection) renderContact(contactSection);
 
   console.log('⚡ SHAMVIL Portfolio initialized successfully');
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
