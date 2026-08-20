@@ -4,9 +4,11 @@
  */
 
 import { renderGallery } from './Gallery.js';
-import { portfolioItems } from '../data/portfolioData.js';
+import { getPublicPortfolioItems } from '../data/portfolioData.js';
 
 export function renderPortfolioView(container) {
+  const publicItems = getPublicPortfolioItems();
+
   container.innerHTML = `
     <section id="portfolio-page" class="work-section dedicated-portfolio-page">
       <!-- Portfolio Page Header Banner -->
@@ -15,7 +17,7 @@ export function renderPortfolioView(container) {
           <a href="#home" class="back-home-link">
             <span>← Back to Home</span>
           </a>
-          <span class="portfolio-count-badge">${portfolioItems.length} Total Projects</span>
+          <span class="portfolio-count-badge">${publicItems.length} Total Projects</span>
         </div>
         <h1 class="portfolio-page-title">Visual Anthology</h1>
         <p class="portfolio-page-subtitle">
