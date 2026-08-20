@@ -316,8 +316,38 @@ export const portfolioItems = [
     client: "Architectural Digest",
     tools: ["Leica M11", "Silver EFEX Pro", "Lightroom"],
     featured: false
+  },
+  {
+    id: "unlisted-private-preview-1",
+    title: "PRIVATE CLIENT REEL (UNLISTED)",
+    category: "Videos",
+    mediaType: "video",
+    aspectRatio: "9:16",
+    src: "/VIDEOS/Video-12111.mp4",
+    poster: "/VIDEOS/Video-12111.mp4.png",
+    description: "Private unlisted commercial reel created for select client preview. Accessible via direct link only.",
+    year: "2026",
+    client: "Confidential Client Preview",
+    tools: ["DaVinci Resolve", "Arri Cinema"],
+    duration: "0:49",
+    featured: false,
+    unlisted: true // Hiddn from main public website gallery! Accessible only via direct secret link
   }
 ];
+
+/**
+ * Returns only public items for the main website gallery (hides unlisted items)
+ */
+export function getPublicPortfolioItems() {
+  return portfolioItems.filter(item => !item.unlisted);
+}
+
+/**
+ * Returns any portfolio item by ID (including unlisted items for direct share links)
+ */
+export function getPortfolioItemById(itemId) {
+  return portfolioItems.find(item => item.id === itemId);
+}
 
 export const ARTIST_INFO = {
   name: "SHAMVIL PORTFOLIO",

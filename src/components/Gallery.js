@@ -2,20 +2,22 @@
  * Pinterest-Inspired Masonry Gallery & Filter Engine
  */
 
-import { PORTFOLIO_CATEGORIES, portfolioItems } from '../data/portfolioData.js';
+import { PORTFOLIO_CATEGORIES, getPublicPortfolioItems } from '../data/portfolioData.js';
 import { parseAspectRatio, debounce } from '../utils/helpers.js';
 import { openLightbox } from './Lightbox.js';
 
 let currentFilter = "All";
 
 export function renderGallery(container) {
+  const publicItems = getPublicPortfolioItems();
+
   container.innerHTML = `
     <!-- Category Filter Bar -->
     <div class="filter-bar" role="tablist" aria-label="Portfolio Categories">
       ${PORTFOLIO_CATEGORIES.map(category => {
         const count = category === "All" 
-          ? portfolioItems.length 
-          : portfolioItems.filter(item => item.category === category).length;
+          ? publicItems.length 
+          : publicItems.filter(item => item.category === category).length;
         const isActive = category === currentFilter ? 'active' : '';
         return `
           <button class="filter-btn ${isActive}" data-category="${category}" role="tab" aria-selected="${isActive === 'active'}">
@@ -70,9 +72,10 @@ function buildMasonryGrid() {
   const gridRoot = document.getElementById('masonry-root');
   if (!gridRoot) return;
 
+  const publicItems = getPublicPortfolioItems();
   const filteredItems = currentFilter === "All" 
-    ? portfolioItems 
-    : portfolioItems.filter(item => item.category === currentFilter);
+    ? publicItems 
+    : publicItems.filter(item => item.category === currentFilter);
 
   // Determine column count based on viewport width (3 columns on desktop for larger card frames)
   const windowWidth = window.innerWidth;

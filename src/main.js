@@ -6,7 +6,7 @@ import './style.css';
 import { renderNavbar } from './components/Navbar.js';
 import { renderHomeView } from './components/HomeView.js';
 import { renderPortfolioView } from './components/PortfolioView.js';
-import { initLightbox } from './components/Lightbox.js';
+import { initLightbox, openLightbox } from './components/Lightbox.js';
 import { initInteractiveBackground } from './components/InteractiveBg.js';
 
 let currentView = null;
@@ -31,14 +31,25 @@ function initApp() {
 }
 
 /**
- * Client-Side Router for HomeView vs PortfolioView
+ * Client-Side Router for HomeView vs PortfolioView with Direct Video Link Support
  */
 function handleRoute() {
-  const hash = window.location.hash.toLowerCase() || '#home';
+  const fullHash = window.location.hash || '#home';
   const appContainer = document.getElementById('app');
   if (!appContainer) return;
 
-  const isPortfolioRoute = hash === '#portfolio' || hash === '#work' || hash === '#gallery';
+  // Extract direct video ID if present (e.g., #portfolio?id=custom-user-video-1 or #view=unlisted-private-preview-1)
+  let directItemId = null;
+  if (fullHash.includes('id=')) {
+    directItemId = fullHash.split('id=')[1]?.split('&')[0];
+  } else if (fullHash.includes('view=')) {
+    directItemId = fullHash.split('view=')[1]?.split('&')[0];
+  } else if (fullHash.includes('preview=')) {
+    directItemId = fullHash.split('preview=')[1]?.split('&')[0];
+  }
+
+  const cleanHash = fullHash.split('?')[0].toLowerCase() || '#home';
+  const isPortfolioRoute = cleanHash === '#portfolio' || cleanHash === '#work' || cleanHash === '#gallery' || directItemId !== null;
 
   if (isPortfolioRoute) {
     if (currentView !== 'portfolio') {
@@ -54,18 +65,25 @@ function handleRoute() {
       renderHomeView(appContainer);
     }
 
-    if (hash === '#about') {
+    if (cleanHash === '#about') {
       updateNavActiveState('about');
       scrollToSection('#about');
-    } else if (hash === '#contact') {
+    } else if (cleanHash === '#contact') {
       updateNavActiveState('contact');
       scrollToSection('#contact');
     } else {
       updateNavActiveState('home');
-      if (hash === '#home' || hash === '#hero') {
+      if (cleanHash === '#home' || cleanHash === '#hero') {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }
+  }
+
+  // Automatically trigger Lightbox if direct video ID is provided
+  if (directItemId) {
+    setTimeout(() => {
+      openLightbox(directItemId);
+    }, 150);
   }
 }
 
